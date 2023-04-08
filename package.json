@@ -2,10 +2,13 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
-    "build": "remix build",
+    "build:remix": "remix build",
+    "build:deck": "npm run build --prefix ./deck",
+    "build": "npm-run-all typecheck build:deck build:remix",
     "dev:remix": "remix watch",
     "dev:wrangler": "cross-env NODE_ENV=development npm run wrangler",
-    "dev": "npm-run-all build --parallel \"dev:*\"",
+    "dev:deck": "npm run start --prefix ./deck",
+    "dev": "npm-run-all build --parallel dev:*",
     "start": "cross-env NODE_ENV=production npm run wrangler",
     "typecheck": "tsc",
     "wrangler": "wrangler pages dev ./public"

@@ -1,0 +1,152 @@
+import {
+  CodeSurfer,
+  CodeSurferColumns,
+  Step,
+} from "code-surfer";
+import {
+  BaseExample,
+  CapturingInvalidMessages,
+  EnhancingValidation,
+  CustomizeMessages,
+} from './demo';
+import { demo, code, deck } from "./theme";
+import { Layout, Centered } from './layout';
+
+export const theme = deck;
+
+<Layout>
+
+# Remixing Constraint Validation
+
+Remix Conf 2023
+
+</Layout>
+
+---
+
+## About me
+
+---
+
+## The Constraint Validation API
+
+---
+
+<CodeSurfer theme={code}>
+
+```html
+<input name="email" required />
+```
+
+```diff 1[21:29]
+```
+
+</CodeSurfer>
+
+---
+
+<CodeSurferColumns themes={[demo, code]} sizes={[2,3]}>
+
+<Step>
+
+<BaseExample />
+
+```jsx file=./01.BaseExample.jsx
+```
+
+</Step>
+
+<Step>
+
+<BaseExample />
+
+```jsx file=./02.Preparation.jsx
+```
+
+</Step>
+
+<Step>
+
+<CapturingInvalidMessages />
+
+```jsx file=./03.ReportingErrors.jsx
+```
+
+</Step>
+
+<Step>
+
+<EnhancingValidation />
+
+```jsx file=./04.EnhancingValidation.jsx
+```
+
+</Step>
+
+<Step>
+
+<CustomizeMessages />
+
+```jsx file=./05.CustomizeMessages.jsx
+```
+
+</Step>
+
+<Step>
+
+<CustomizeMessages />
+
+```jsx file=./06.Action.jsx
+```
+
+</Step>
+
+
+
+<Step>
+
+<CustomizeMessages />
+
+```diff 17:22
+```
+
+</Step>
+
+</CodeSurferColumns>
+
+---
+
+<Centered>
+
+# Never trust the client
+
+</Centered>
+
+---
+
+<CodeSurfer theme={code}>
+
+
+```jsx 49:69 file=./06.Action.jsx
+```
+
+```jsx 66,75 file=./07.ExtractSchema.jsx
+```
+
+```diff 5:15
+```
+
+```jsx 1 file=./08.SecretSauce.jsx
+```
+
+```diff 31:43
+```
+
+```jsx file=./09.SyncState.jsx
+```
+
+</CodeSurfer>
+
+---
+
+Demo
