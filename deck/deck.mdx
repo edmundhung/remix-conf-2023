@@ -3,14 +3,8 @@ import {
   CodeSurferColumns,
   Step,
 } from "code-surfer";
-import {
-  BaseExample,
-  CapturingInvalidMessages,
-  EnhancingValidation,
-  CustomizeMessages,
-} from './demo';
 import { demo, code, deck } from "./theme";
-import { Layout, Centered } from './layout';
+import { Example, Layout, Centered } from './layout';
 
 export const theme = deck;
 
@@ -49,7 +43,7 @@ Remix Conf 2023
 
 <Step>
 
-<BaseExample />
+<Example src="./basic" />
 
 ```jsx file=./01.BaseExample.jsx
 ```
@@ -58,7 +52,7 @@ Remix Conf 2023
 
 <Step>
 
-<BaseExample />
+<Example src="./basic" />
 
 ```jsx file=./02.Preparation.jsx
 ```
@@ -67,7 +61,7 @@ Remix Conf 2023
 
 <Step>
 
-<CapturingInvalidMessages />
+<Example src="./invalid-event" />
 
 ```jsx file=./03.ReportingErrors.jsx
 ```
@@ -76,7 +70,7 @@ Remix Conf 2023
 
 <Step>
 
-<EnhancingValidation />
+<Example src="./novalidate" />
 
 ```jsx file=./04.EnhancingValidation.jsx
 ```
@@ -85,7 +79,7 @@ Remix Conf 2023
 
 <Step>
 
-<CustomizeMessages />
+<Example src="./validitystate" />
 
 ```jsx file=./05.CustomizeMessages.jsx
 ```
@@ -94,7 +88,7 @@ Remix Conf 2023
 
 <Step>
 
-<CustomizeMessages />
+<Example src="./validitystate" />
 
 ```jsx file=./06.Action.jsx
 ```
@@ -105,7 +99,7 @@ Remix Conf 2023
 
 <Step>
 
-<CustomizeMessages />
+<Example src="./validitystate" />
 
 ```diff 17:22
 ```

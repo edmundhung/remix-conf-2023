@@ -8,6 +8,21 @@ export function Layout({ children }) {
   );
 }
 
+export function Example({ src }) {
+  const base = process.env.NODE_ENV === 'development'
+    ? 'http://localhost:8788'
+    : window.location.href;
+  const url = new URL(src, base);
+  
+  return (
+    <iframe
+      src={url} 
+      style={{ height: '100%', width: '100%', border: 'none' }}
+      title="example"
+    />
+  );
+}
+
 export function Centered({ children }) {
   return (
     <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
