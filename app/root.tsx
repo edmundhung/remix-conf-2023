@@ -6,6 +6,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useSearchParams,
 } from "@remix-run/react";
 import styles from "~/styles.css";
 
@@ -13,7 +14,16 @@ export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
 ];
 
+export function useShouldHydrate() {
+  const [searchParams] = useSearchParams();
+  const shouldHydrate = searchParams.has('hydrate') ? searchParams.get("hydrate") === 'yes' : true;
+
+  return shouldHydrate;
+}
+
 export default function App() {
+  const shouldHydrate = useShouldHydrate();
+
   return (
     <html lang="en">
       <head>
@@ -25,7 +35,7 @@ export default function App() {
       <body className="h-screen">
         <Outlet />
         <ScrollRestoration />
-        <Scripts />
+        {shouldHydrate ? <Scripts /> : null}
         <LiveReload />
       </body>
     </html>

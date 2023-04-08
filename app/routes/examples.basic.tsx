@@ -12,10 +12,12 @@ export default function Basic() {
             pattern="[^@]+@[A-Za-z0-9]+.[A-Za-z0-9]+"
             autoComplete="off"
           />
+          <p></p>
         </div>
         <div>
           <label>Password</label>
           <input name="password" type="password" required />
+          <p></p>
         </div>
         <button>Login</button>
       </Form>
