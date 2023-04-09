@@ -1,17 +1,9 @@
 import React from 'react';
 
-export function Layout({ children }) {
-  return (
-    <div style={{ padding: '2rem' }}>
-      {children}
-    </div>
-  );
-}
-
 export function Example({ src }) {
   const base = process.env.NODE_ENV === 'development'
     ? 'http://localhost:8788'
-    : window.location.href;
+    : 'https://remix-conf-2023.edmund.dev';
   const url = new URL(src, base);
   
   return (
@@ -23,7 +15,7 @@ export function Example({ src }) {
   );
 }
 
-export function Centered({ children }) {
+export function Layout({ children }) {
   return (
     <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <div>{children}</div>

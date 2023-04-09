@@ -5,3 +5,12 @@ node_modules
 /functions/\[\[path\]\].js.map
 /public/build
 .env
+
+# Custom setup
+/public
+
+!/public/_headers
+!/public/_routes.json
+
+# mdx-deck
+/deck/public
