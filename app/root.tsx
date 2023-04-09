@@ -32,7 +32,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="h-screen">
+      <body className="h-screen bg-gray-200">
         <Outlet />
         <ScrollRestoration />
         {shouldHydrate ? <Scripts /> : null}

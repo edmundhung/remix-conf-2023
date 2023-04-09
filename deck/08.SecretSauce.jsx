@@ -36,7 +36,7 @@ export async function action({ request }) {
   });
 
   if (submission.error) {
-    return json(submission.error, { status: 400 })
+    return json(submission, { status: 400 })
   }
 
   return await login(submission.value);

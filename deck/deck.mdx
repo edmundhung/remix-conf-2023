@@ -8,34 +8,177 @@ import { Example, Layout, Centered } from './layout';
 
 export const theme = deck;
 
-<Layout>
+<Centered>
 
 # Remixing Constraint Validation
 
 Remix Conf 2023
 
-</Layout>
+</Centered>
 
 ---
 
-## About me
-
----
+<Centered>
 
 ## The Constraint Validation API
+
+A specification that spread across HTML, CSS and the DOM.
+
+</Centered>
 
 ---
 
 <CodeSurfer theme={code}>
 
-```html
-<input name="email" required />
+```jsx title="Validation Attributes"
+
+
 ```
 
-```diff 1[21:29]
+```jsx title="Validation Attributes"
+<input required />
+```
+
+```jsx title="Validation Attributes"
+<input required />
+
+<input type="number" min={0} max={5} step={0.5} />
+```
+
+```jsx title="Validation Attributes"
+<input required />
+
+<input type="number" min={0} max={5} step={0.5} />
+
+<input type="email" pattern="[^@]+@example.com" />
+```
+
+```jsx title="Validation Attributes"
+<input required />
+
+<input type="number" min={0} max={5} step={0.5} />
+
+<input type="email" pattern="[^@]+@example.com" />
+
+<textarea minLength={10} maxLength={100}>
 ```
 
 </CodeSurfer>
+
+---
+
+<CodeSurfer theme={code}>
+
+```jsx title="ValidityState"
+
+
+```
+
+```jsx title="ValidityState"
+<input
+  onChange={(event) => {
+    const input = event.currentTarget;
+
+    console.log(input.validity);
+  }}
+/>
+```
+
+```json title="ValidityState"
+{
+  "badInput": false,
+  "customError": false,
+  "patternMismatch": false,
+  "rangeOverflow": false,
+  "rangeUnderflow": false,
+  "stepMismatch": false,
+  "tooLong": false,
+  "tooShort": false,
+  "typeMismatch": false,
+  "valid": true,
+  "valueMissing": false
+}
+```
+
+```json title="ValidityState" subtitle="When a required input is empty"
+{
+  "badInput": false,
+  "customError": false,
+  "patternMismatch": false,
+  "rangeOverflow": false,
+  "rangeUnderflow": false,
+  "stepMismatch": false,
+  "tooLong": false,
+  "tooShort": false,
+  "typeMismatch": false,
+  "valid": false,
+  "valueMissing": true
+}
+```
+
+</CodeSurfer>
+
+---
+
+<CodeSurfer theme={code}>
+
+```jsx title="noValidate"
+
+
+```
+
+```jsx title="noValidate"
+<form
+  noValidate
+/>
+```
+
+```jsx title="noValidate"
+<form
+  onSubmit={event => {
+    const form = event.currentTarget;
+
+    if (!form.reportValidity()) {
+      event.preventDefault();
+    }
+  }}
+  noValidate
+/>
+```
+
+</CodeSurfer>
+
+---
+
+<CodeSurfer theme={code}>
+
+```jsx title="The invalid event"
+
+
+```
+
+```jsx title="The invalid event"
+<input
+  onInvalid={event => {
+    const input = event.currentTarget;
+
+    // input.validity.valueMissing
+    // input.validity.typeMismatch
+
+    event.preventDefault();
+  }}
+/>
+```
+
+</CodeSurfer>
+
+---
+
+<Centered>
+
+## A Remix Recipe
+
+</Centered>
 
 ---
 
@@ -88,7 +231,7 @@ Remix Conf 2023
 
 <Step subtitle="Processing the form data on action">
 
-<Example src="./examples/validitystate" />
+<Example src="./examples/nojs" />
 
 ```jsx file=./06.Action.jsx
 ```
@@ -111,22 +254,22 @@ Remix Conf 2023
 
 <Step>
 
-<Example src="./examples/nojs?hydrate=no" />
+<Example src="./examples/nojs" />
 
 ```jsx 49:69 file=./06.Action.jsx
 ```
 
 </Step>
 
-<Step>
+<Step subtitle="Extract schema">
 
 <Example src="./examples/nojs" />
 
-```jsx 66,75 file=./07.ExtractSchema.jsx
+```jsx 68,77 file=./07.ExtractSchema.jsx
 ```
 </Step>
 
-<Step>
+<Step subtitle="Extract schema">
 
 <Example src="./examples/nojs" />
 
@@ -134,7 +277,7 @@ Remix Conf 2023
 ```
 </Step>
 
-<Step>
+<Step subtitle="The secret sauce">
 
 <Example src="./examples/nojs" />
 
@@ -143,7 +286,7 @@ Remix Conf 2023
 
 </Step>
 
-<Step>
+<Step subtitle="Parse formdata with the schema">
 
 <Example src="./examples/nojs" />
 
@@ -152,7 +295,7 @@ Remix Conf 2023
 
 </Step>
 
-<Step>
+<Step subtitle="Ensure client errors are synced with server">
 
 <Example src="./examples/nojs" />
 
@@ -165,4 +308,12 @@ Remix Conf 2023
 
 ---
 
-Demo
+<Centered>
+
+# Learn more
+
+https://edmund.dev/blog/remixing-constraint-validation
+
+@_edmundhung
+
+</Centered>
