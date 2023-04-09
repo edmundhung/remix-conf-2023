@@ -2,6 +2,7 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
+    "postinstall": "npm install --prefix ./deck",
     "build:remix": "remix build",
     "build:deck": "npm run build --prefix ./deck && cp -r ./deck/public ./",
     "build": "npm-run-all build:deck build:remix",
