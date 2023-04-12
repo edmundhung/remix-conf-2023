@@ -1,12 +1,16 @@
-import { createPagesFunctionHandler } from "@remix-run/cloudflare-pages";
+import { createRequestHandler } from "@remix-run/cloudflare";
 import * as build from "@remix-run/dev/server-build";
 
-const handleRequest = createPagesFunctionHandler({
-  build,
-  mode: process.env.NODE_ENV,
-  getLoadContext: (context) => context.env,
-});
+let handleRequest;
 
 export function onRequest(context) {
-  return handleRequest(context);
+  if (!handleRequest) {
+		handleRequest = createRequestHandler(
+			build,
+			context.env.ENVIRONMENT,
+		);
+	}
+
+	// This is where you can pass a custom load context to your app
+	return handleRequest(context.request);
 }
