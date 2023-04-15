@@ -15,7 +15,7 @@ const schema = {
     },
 };
 
-function formatValidity({ validity }: { validity: ValidityState }) {
+function formatError({ validity }: { validity: ValidityState }) {
   if (validity.valueMissing) {
     return 'The field is required';
   }
@@ -45,7 +45,7 @@ export default function Example4() {
 
         setError(error => ({
           ...error,
-          [input.name]: formatValidity(input),
+          [input.name]: formatError(input),
         }));
 
         event.preventDefault();

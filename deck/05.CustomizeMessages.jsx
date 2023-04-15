@@ -1,7 +1,7 @@
 import { Form } from '@remix-run/react';
 import { useState } from 'react';
 
-function formatValidity(input) {
+function formatError(input) {
   if (input.validity.valueMissing) {
     return "The field is required";
   }
@@ -24,7 +24,7 @@ export default function LoginForm() {
   
         setError((error) => ({
           ...error,
-          [input.name]: formatValidity(input),
+          [input.name]: formatError(input),
         }));
 
         event.preventDefault();

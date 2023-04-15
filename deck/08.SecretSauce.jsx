@@ -16,7 +16,7 @@ const schema = {
     },
 };
 
-function formatValidity(input) {
+function formatError(input) {
   if (input.validity.valueMissing) {
     return "The field is required";
   }
@@ -32,7 +32,7 @@ export async function action({ request }) {
   const formData = await request.formData();
   const submission = parse(formData, {
     schema,
-    formatValidity,
+    formatError,
   });
 
   if (submission.error) {
@@ -53,7 +53,7 @@ export default function LoginForm() {
   
         setError((error) => ({
           ...error,
-          [input.name]: formatValidity(input.validity),
+          [input.name]: formatError(input.validity),
         }));
 
         event.preventDefault();
