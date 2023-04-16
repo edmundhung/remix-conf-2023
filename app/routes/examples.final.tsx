@@ -44,7 +44,7 @@ export async function action({ request }: ActionArgs) {
 
 export default function Example4() {
   const lastSubmission = useActionData<typeof action>();
-  const [error, setError] = useState<Record<string, string>>(lastSubmission?.error ?? {});
+  const [error, setError] = useState(lastSubmission?.error ?? {});
 
   useEffect(() => {
     if (!lastSubmission) {
