@@ -1,22 +1,35 @@
 import { Form } from '@remix-run/react';
 import { useState } from 'react';
 
-export default function Example2() {
-  const [error, setError] = useState<Record<string, string>>({});
+export default function LoginForm() {
+  const [error, setError] = useState({});
 
   return (
     <Form
       method="post"
-      onInvalidCapture={event => {
-        const input = event.target as HTMLInputElement;
+      onInvalid={(event) => {
+        const input = event.target;
 
-        setError(error => ({
+        setError((error) => ({
           ...error,
           [input.name]: input.validationMessage,
         }));
 
         event.preventDefault();
       }}
+      onSubmit={(event) => {
+        const form = event.currentTarget;
+
+        // Reset errors
+        setError({});
+
+        // Check validity of each field
+        if (!form.reportValidity()) {
+          // Prevent default form submission
+          event.preventDefault();
+        }
+      }}
+      noValidate
     >
       <div>
         <label>Email</label>
@@ -26,9 +39,8 @@ export default function Example2() {
           type="email"
           required
           pattern="[^@]+@[A-Za-z0-9]+.[A-Za-z0-9]+"
-          autoComplete="off"
         />
-        <p>{error.email}</p>
+        <div>{error.email}</div>
       </div>
       <div>
         <label>Password</label>
@@ -38,7 +50,7 @@ export default function Example2() {
           type="password"
           required
         />
-        <p>{error.password}</p>
+        <div>{error.password}</div>
       </div>
       <button>Login</button>
     </Form>

@@ -7,29 +7,18 @@ export default function LoginForm() {
   return (
     <Form
       method="post"
-      onInvalidCapture={(event) => {
+      onInvalid={(event) => {
         const input = event.target;
-  
+
+        // Update message based on the input name
         setError((error) => ({
           ...error,
           [input.name]: input.validationMessage,
         }));
 
+        // Prevent default error bubble
         event.preventDefault();
       }}
-      onSubmit={(event) => {
-        const form = event.currentTarget;
-
-        // Reset errors
-        setError({});
-
-        // Check validity of each field
-        if (!form.reportValidity()) {
-          // Prevent default form submission
-          event.preventDefault();
-        }
-      }}
-      noValidate
     >
       <div>
         <label>Email</label>

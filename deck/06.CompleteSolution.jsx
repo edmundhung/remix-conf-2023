@@ -1,6 +1,20 @@
+import { parse } from "@conform-to/validitystate"
+import { json } from "@remix-run/node";
 import { Form } from '@remix-run/react';
 import { useState } from 'react';
 import { login } from "~/auth.server";
+
+const schema = {
+    email: {
+        type: "email",
+        required: true,
+        pattern: "[^@]+@[A-Za-z0-9]+.[A-Za-z0-9]+",
+    },
+    password: {
+        type: "password",
+        required: true,
+    },
+};
 
 function formatError(input) {
   if (input.validity.valueMissing) {
@@ -16,20 +30,34 @@ function formatError(input) {
 
 export async function action({ request }) {
   const formData = await request.formData();
-  const value = Object.fromEntries(formData);
-  
-  return await login(value);
+  const submission = parse(formData, {
+    schema,
+    formatError,
+  });
+
+  if (submission.error) {
+    return json(submission, { status: 400 })
+  }
+
+  return await login(submission.value);
 }
 
 export default function LoginForm() {
-  const [error, setError] = useState({});
+  const lastSubmission = useActionData();
+  const [error, setError] = useState(lastSubmission?.error ?? {});
+
+  useEffect(() => {
+    if (lastSubmission) {
+      setError(lastSubmission?.error ?? {});
+    }
+  }, [lastSubmission]);
 
   return (
     <Form
       method="post"
-      onInvalidCapture={(event) => {
+      onInvalid={(event) => {
         const input = event.target;
-  
+
         setError((error) => ({
           ...error,
           [input.name]: formatError(input),
@@ -40,9 +68,12 @@ export default function LoginForm() {
       onSubmit={(event) => {
         const form = event.currentTarget;
 
+        // Reset errors
         setError({});
 
+        // Check validity of each field
         if (!form.reportValidity()) {
+          // Prevent default form submission
           event.preventDefault();
         }
       }}
@@ -53,9 +84,7 @@ export default function LoginForm() {
         <input
           className={error.email ? 'error' : ''}
           name="email"
-          type="email"
-          required
-          pattern="[^@]+@[A-Za-z0-9]+.[A-Za-z0-9]+"
+          {...schema.email}
         />
         <div>{error.email}</div>
       </div>
@@ -64,8 +93,7 @@ export default function LoginForm() {
         <input
           className={error.password ? 'error' : ''}
           name="password"
-          type="password"
-          required
+          {...schema.password}
         />
         <div>{error.password}</div>
       </div>

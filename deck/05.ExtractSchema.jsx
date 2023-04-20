@@ -1,8 +1,5 @@
-import { parse } from "@conform-to/validitystate"
-import { json } from "@remix-run/node";
 import { Form } from '@remix-run/react';
 import { useState } from 'react';
-import { login } from "~/auth.server";
 
 const schema = {
     email: {
@@ -28,49 +25,31 @@ function formatError(input) {
   return "";
 }
 
-export async function action({ request }) {
-  const formData = await request.formData();
-  const submission = parse(formData, {
-    schema,
-    formatError,
-  });
-
-  if (submission.error) {
-    return json(submission, { status: 400 })
-  }
-
-  return await login(submission.value);
-}
-
 export default function LoginForm() {
-  const lastSubmission = useActionData();
-  const [error, setError] = useState(lastSubmission?.error ?? {});
-
-  useEffect(() => {
-    if (lastSubmission) {
-      setError(lastSubmission?.error ?? {});
-    }
-  }, [lastSubmission]);
+  const [error, setError] = useState({});
 
   return (
     <Form
       method="post"
-      onInvalidCapture={(event) => {
+      onInvalid={(event) => {
         const input = event.target;
-  
+
         setError((error) => ({
           ...error,
-          [input.name]: formatError(input.validity),
+          [input.name]: formatError(input),
         }));
 
         event.preventDefault();
       }}
       onSubmit={(event) => {
         const form = event.currentTarget;
-        
+
+        // Reset errors
         setError({});
 
+        // Check validity of each field
         if (!form.reportValidity()) {
+          // Prevent default form submission
           event.preventDefault();
         }
       }}

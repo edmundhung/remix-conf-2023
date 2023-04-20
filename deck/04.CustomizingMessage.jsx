@@ -1,18 +1,5 @@
 import { Form } from '@remix-run/react';
 import { useState } from 'react';
-import { login } from "~/auth.server";
-
-const schema = {
-    email: {
-        type: "email",
-        required: true,
-        pattern: "[^@]+@[A-Za-z0-9]+.[A-Za-z0-9]+",
-    },
-    password: {
-        type: "password",
-        required: true,
-    },
-};
 
 function formatError(input) {
   if (input.validity.valueMissing) {
@@ -26,22 +13,15 @@ function formatError(input) {
   return "";
 }
 
-export async function action({ request }) {
-  const formData = await request.formData();
-  const value = Object.fromEntries(formData);
-  
-  return await login(value);
-}
-
 export default function LoginForm() {
   const [error, setError] = useState({});
 
   return (
     <Form
       method="post"
-      onInvalidCapture={(event) => {
+      onInvalid={(event) => {
         const input = event.target;
-  
+
         setError((error) => ({
           ...error,
           [input.name]: formatError(input),
@@ -52,9 +32,12 @@ export default function LoginForm() {
       onSubmit={(event) => {
         const form = event.currentTarget;
 
+        // Reset errors
         setError({});
 
+        // Check validity of each field
         if (!form.reportValidity()) {
+          // Prevent default form submission
           event.preventDefault();
         }
       }}
@@ -65,7 +48,9 @@ export default function LoginForm() {
         <input
           className={error.email ? 'error' : ''}
           name="email"
-          {...schema.email}
+          type="email"
+          required
+          pattern="[^@]+@[A-Za-z0-9]+.[A-Za-z0-9]+"
         />
         <div>{error.email}</div>
       </div>
@@ -74,7 +59,8 @@ export default function LoginForm() {
         <input
           className={error.password ? 'error' : ''}
           name="password"
-          {...schema.password}
+          type="password"
+          required
         />
         <div>{error.password}</div>
       </div>

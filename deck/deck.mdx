@@ -20,9 +20,7 @@ Remix Conf 2023
 
 <Layout>
 
-## The Constraint Validation API
-
-A specification that spread across HTML, CSS and the DOM.
+## What is Constraint Validation?
 
 </Layout>
 
@@ -30,30 +28,16 @@ A specification that spread across HTML, CSS and the DOM.
 
 <CodeSurfer theme={code}>
 
-```jsx title="Validation Attributes"
+```jsx title="HTML Validation Attributes"
 
 
 ```
 
-```jsx title="Validation Attributes"
+```jsx title="HTML Validation Attributes"
 <input required />
 ```
 
-```jsx title="Validation Attributes"
-<input required />
-
-<input type="number" min={0} max={5} step={0.5} />
-```
-
-```jsx title="Validation Attributes"
-<input required />
-
-<input type="number" min={0} max={5} step={0.5} />
-
-<input type="email" pattern="[^@]+@example.com" />
-```
-
-```jsx title="Validation Attributes"
+```jsx title="HTML Validation Attributes"
 <input required />
 
 <input type="number" min={0} max={5} step={0.5} />
@@ -67,22 +51,26 @@ A specification that spread across HTML, CSS and the DOM.
 
 ---
 
+<Layout>
+
+## Problems
+
+</Layout>
+
+---
+
+<Layout>
+
+## Solutions - DOM APIs
+
+- What is the error
+- When to report it
+
+</Layout>
+
+---
+
 <CodeSurfer theme={code}>
-
-```jsx title="ValidityState"
-
-
-```
-
-```jsx title="ValidityState"
-<input
-  onChange={(event) => {
-    const input = event.currentTarget;
-
-    console.log(input.validity);
-  }}
-/>
-```
 
 ```json title="ValidityState"
 {
@@ -100,7 +88,7 @@ A specification that spread across HTML, CSS and the DOM.
 }
 ```
 
-```json title="ValidityState" subtitle="When a required input is empty"
+```json title="ValidityState" subtitle="if an required input is empty"
 {
   "badInput": false,
   "customError": false,
@@ -115,6 +103,32 @@ A specification that spread across HTML, CSS and the DOM.
   "valueMissing": true
 }
 ```
+</CodeSurfer>
+
+---
+
+<CodeSurfer theme={code}>
+
+```jsx title="setCustomValidity"
+<input
+  onChange={event => {
+    // The input element
+    const input = event.currentTarget;
+
+    if (input.validity.valueMissing) {
+      input.setCustomValidity('This field is required');
+    } else if (input.validity.typeMismatch) {
+      input.setCustomValidity('This field is invalid');
+    } else {
+      // Reset the error message
+      input.setCustomValidity('');
+    }
+
+    // To access the error message
+    console.log(input.validationMessage);
+  }}
+/>
+```
 
 </CodeSurfer>
 
@@ -122,51 +136,34 @@ A specification that spread across HTML, CSS and the DOM.
 
 <CodeSurfer theme={code}>
 
-```jsx title="noValidate"
+```jsx title="invalid event" subtitle="By default, the browser will fire an invalid event on submission"
+<input
+  onInvalid={event => {
+    // The invalid form element
+    const input = event.currentTarget;
 
+    // The error message:
+    console.log(input.validationMessage)
 
-```
-
-```jsx title="noValidate"
-<form
-  noValidate
+    // Prevent browser error bubble
+    event.preventDefault();
+  }}
 />
 ```
 
-```jsx title="noValidate"
+```jsx title="reportValidity" subtitle="But you can customize the time when it should fire the invalid event" 
 <form
   onSubmit={event => {
     const form = event.currentTarget;
 
+    // By calling reportValidity, the browser will fire
+    // the invalid event on all invalid form elements
     if (!form.reportValidity()) {
+      // Prevent form submit if there are any errors
       event.preventDefault();
     }
   }}
   noValidate
-/>
-```
-
-</CodeSurfer>
-
----
-
-<CodeSurfer theme={code}>
-
-```jsx title="The invalid event"
-
-
-```
-
-```jsx title="The invalid event"
-<input
-  onInvalid={event => {
-    const input = event.currentTarget;
-
-    // input.validity.valueMissing
-    // input.validity.typeMismatch
-
-    event.preventDefault();
-  }}
 />
 ```
 
@@ -193,47 +190,29 @@ A specification that spread across HTML, CSS and the DOM.
 
 </Step>
 
-<Step subtitle="Prepare a state that manages error message of each field">
+<Step subtitle="Reporting error manually with the invalid event">
 
-<Example src="./examples/error" />
+<Example src="./examples/report-error" />
 
-```jsx file=./02.Preparation.jsx
+```jsx file=./02.ReportingErrors.jsx
 ```
 
 </Step>
 
-<Step subtitle="Capturing validation message with the invalid event">
+<Step subtitle="Clearing messages before reporting new errors">
 
-<Example src="./examples/invalid-event" />
+<Example src="./examples/clear-error" />
 
-```jsx file=./03.ReportingErrors.jsx
+```jsx file=./03.ClearingErrors.jsx
 ```
 
 </Step>
 
-<Step subtitle="Ensuring messages are reset before reporting new errors">
+<Step subtitle="Customizing messages based on the ValidityState">
 
-<Example src="./examples/novalidate" />
+<Example src="./examples/custom-message" />
 
-```jsx file=./04.EnhancingValidation.jsx
-```
-
-</Step>
-
-<Step subtitle="Customizing messages with the validity state">
-
-<Example src="./examples/validitystate" />
-
-```jsx file=./05.CustomizeMessages.jsx
-```
-
-</Step>
-
-<Step subtitle="Processing the form data on action">
-
-<Example src="./examples/nojs" />
-
-```jsx file=./06.Action.jsx
+```jsx file=./04.CustomizingMessage.jsx
 ```
 
 </Step>
@@ -244,7 +223,7 @@ A specification that spread across HTML, CSS and the DOM.
 
 <Layout>
 
-# Never trust the client
+# How about the server?
 
 </Layout>
 
@@ -254,26 +233,26 @@ A specification that spread across HTML, CSS and the DOM.
 
 <Step>
 
-<Example src="./examples/nojs" />
+<Example src="./examples/custom-message" />
 
-```jsx 49:69 file=./06.Action.jsx
+```jsx 46:66 file=./04.CustomizingMessage.jsx
 ```
 
 </Step>
 
-<Step subtitle="Extract schema">
+<Step subtitle="Extract the constraint of each form control as the schema">
 
 <Example src="./examples/final" />
 
-```jsx 68,77 file=./07.ExtractSchema.jsx
+```jsx 63,72 file=./05.ExtractSchema.jsx
 ```
 </Step>
 
-<Step subtitle="Extract schema">
+<Step subtitle="Extract the constraint of each form control as the schema">
 
 <Example src="./examples/final" />
 
-```diff 5:15
+```diff 4:14
 ```
 </Step>
 
@@ -281,12 +260,12 @@ A specification that spread across HTML, CSS and the DOM.
 
 <Example src="./examples/final" />
 
-```jsx 1 file=./08.SecretSauce.jsx
+```jsx 1 file=./06.CompleteSolution.jsx
 ```
 
 </Step>
 
-<Step subtitle="Parse formdata with the schema">
+<Step subtitle="Parse formdata based on the schema">
 
 <Example src="./examples/final" />
 
@@ -295,11 +274,11 @@ A specification that spread across HTML, CSS and the DOM.
 
 </Step>
 
-<Step subtitle="Ensure client errors are synced with server">
+<Step subtitle="Sync error with the client">
 
 <Example src="./examples/final" />
 
-```jsx file=./09.SyncState.jsx
+```diff 46:54
 ```
 
 </Step>
@@ -310,7 +289,15 @@ A specification that spread across HTML, CSS and the DOM.
 
 <Layout>
 
-# Learn more
+## Progressive Enhancement
+
+</Layout>
+
+---
+
+<Layout>
+
+## Learn more
 
 https://edmund.dev/blog/remixing-constraint-validation
 

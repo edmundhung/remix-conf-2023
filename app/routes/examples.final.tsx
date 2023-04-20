@@ -1,78 +1,79 @@
-import { type FormSchema, type Input, parse } from '@conform-to/validitystate';
-import { json, type ActionArgs } from '@remix-run/cloudflare';
+import { type Input, type FormSchema, parse } from "@conform-to/validitystate"
+import { type ActionArgs, json } from "@remix-run/cloudflare";
 import { Form, useActionData } from '@remix-run/react';
 import { useEffect, useState } from 'react';
-import { login } from '~/auth.server';
+import { login } from "~/auth.server";
+
+export async function action({ request }: ActionArgs) {
+  const formData = await request.formData();
+  const submission = parse(formData, {
+    schema,
+    formatError,
+  });
+
+  if (submission.error) {
+    return json(submission, { status: 400 })
+  }
+
+  return await login(submission.value);
+}
 
 const schema = {
     email: {
-        type: 'email',
+        type: "email",
         required: true,
-        pattern: '[^@]+@[A-Za-z0-9]+.[A-Za-z0-9]+',
+        pattern: "[^@]+@[A-Za-z0-9]+.[A-Za-z0-9]+",
     },
     password: {
-        type: 'password',
+        type: "password",
         required: true,
     },
 } satisfies FormSchema;
 
-function formatError({ validity }: Input) {
-  if (validity.valueMissing) {
-    return 'The field is required';
+function formatError(input: Input) {
+  if (input.validity.valueMissing) {
+    return "The field is required";
   }
 
-  if (validity.typeMismatch || validity.patternMismatch) {
-    return 'The value is invalid';
+  if (input.validity.typeMismatch || input.validity.patternMismatch) {
+    return "The value is invalid";
   }
 
-  return '';
+  return "";
 }
 
-export async function action({ request }: ActionArgs) {
-    const formData = await request.formData();
-    const submission = parse(formData, {
-        schema,
-        formatError,
-    });
-
-    if (submission.error) {
-        return json(submission, { status: 400 });
-    }
-
-    return await login(submission.value);
-} 
-
-export default function Example4() {
+export default function LoginForm() {
   const lastSubmission = useActionData<typeof action>();
   const [error, setError] = useState(lastSubmission?.error ?? {});
 
   useEffect(() => {
-    if (!lastSubmission) {
-        return;
+    if (lastSubmission) {
+      setError(lastSubmission?.error ?? {});
     }
-
-    setError(lastSubmission.error);
   }, [lastSubmission]);
 
   return (
     <Form
       method="post"
-      onInvalidCapture={event => {
+      onInvalid={(event) => {
         const input = event.target as HTMLInputElement;
 
-        setError(error => ({
+        setError((error) => ({
           ...error,
           [input.name]: formatError(input),
         }));
 
         event.preventDefault();
       }}
-      onSubmit={event => {
+      onSubmit={(event) => {
         const form = event.currentTarget;
 
+        // Reset errors
         setError({});
 
+        // Check validity of each field
         if (!form.reportValidity()) {
+          // Prevent default form submission
           event.preventDefault();
         }
       }}
@@ -84,7 +85,6 @@ export default function Example4() {
           className={error.email ? 'error' : ''}
           name="email"
           {...schema.email}
-          autoComplete="off"
         />
         <p>{error.email}</p>
       </div>

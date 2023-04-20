@@ -1,22 +1,7 @@
-import { parse } from "@conform-to/validitystate"
-import { json } from "@remix-run/node";
 import { Form } from '@remix-run/react';
 import { useState } from 'react';
-import { login } from "~/auth.server";
 
-const schema = {
-    email: {
-        type: "email",
-        required: true,
-        pattern: "[^@]+@[A-Za-z0-9]+.[A-Za-z0-9]+",
-    },
-    password: {
-        type: "password",
-        required: true,
-    },
-};
-
-function formatError(input) {
+function formatError(input: HTMLInputElement) {
   if (input.validity.valueMissing) {
     return "The field is required";
   }
@@ -28,42 +13,31 @@ function formatError(input) {
   return "";
 }
 
-export async function action({ request }) {
-  const formData = await request.formData();
-  const submission = parse(formData, {
-    schema,
-    formatError,
-  });
-
-  if (submission.error) {
-    return json(submission, { status: 400 })
-  }
-
-  return await login(submission.value);
-}
-
 export default function LoginForm() {
-  const [error, setError] = useState({});
+  const [error, setError] = useState<Record<string, string>>({});
 
   return (
     <Form
       method="post"
-      onInvalidCapture={(event) => {
-        const input = event.target;
-  
+      onInvalid={(event) => {
+        const input = event.target as HTMLInputElement;
+
         setError((error) => ({
           ...error,
-          [input.name]: formatError(input.validity),
+          [input.name]: formatError(input),
         }));
 
         event.preventDefault();
       }}
       onSubmit={(event) => {
         const form = event.currentTarget;
-        
+
+        // Reset errors
         setError({});
 
+        // Check validity of each field
         if (!form.reportValidity()) {
+          // Prevent default form submission
           event.preventDefault();
         }
       }}
@@ -74,18 +48,21 @@ export default function LoginForm() {
         <input
           className={error.email ? 'error' : ''}
           name="email"
-          {...schema.email}
+          type="email"
+          required
+          pattern="[^@]+@[A-Za-z0-9]+.[A-Za-z0-9]+"
         />
-        <div>{error.email}</div>
+        <p>{error.email}</p>
       </div>
       <div>
         <label>Password</label>
         <input
           className={error.password ? 'error' : ''}
           name="password"
-          {...schema.password}
+          type="password"
+          required
         />
-        <div>{error.password}</div>
+        <p>{error.password}</p>
       </div>
       <button>Login</button>
     </Form>
