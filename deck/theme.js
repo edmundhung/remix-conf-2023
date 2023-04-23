@@ -1,7 +1,7 @@
 export const code = {
     "colors": {
       "text": "#393A34",
-      "background": "#f6f8fa",
+      "background": "#fff",
       "primary": "#e3116c"
     },
     "styles": {

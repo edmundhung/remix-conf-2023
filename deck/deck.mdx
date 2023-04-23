@@ -12,7 +12,7 @@ export const theme = deck;
 
 # Remixing Constraint Validation
 
-Remix Conf 2023
+<div styles={{ textAlign: 'right '}}>Edmund Hung @ Remix Conf 2023</div>
 
 </Layout>
 
@@ -20,7 +20,9 @@ Remix Conf 2023
 
 <Layout>
 
-## What is Constraint Validation?
+## A browser mechanism for form validation
+
+<center>#UseThePlatform</center>
 
 </Layout>
 
@@ -44,7 +46,7 @@ Remix Conf 2023
 
 <input type="email" pattern="[^@]+@example.com" />
 
-<textarea minLength={10} maxLength={100}>
+<textarea minLength={10} maxLength={100} />
 ```
 
 </CodeSurfer>
@@ -53,7 +55,12 @@ Remix Conf 2023
 
 <Layout>
 
-## Problems
+## Issues
+
+- Error bubbles look different on each browser
+- Styles are not customizable
+- Same problems with the error messages
+- Report only 1 problem at a time
 
 </Layout>
 
@@ -61,12 +68,29 @@ Remix Conf 2023
 
 <Layout>
 
-## Solutions - DOM APIs
-
-- What is the error
-- When to report it
+## What we missed: The DOM APIs
 
 </Layout>
+
+---
+
+<CodeSurfer theme={code}>
+
+```jsx title="validationMessage"
+<input
+  onChange={event => {
+    const input = event.currentTarget;
+
+    // Current error message
+    console.log(input.validationMessage);
+
+    // ValidityState
+    console.log(input.validity);
+  }}
+/>
+```
+
+</CodeSurfer>
 
 ---
 
@@ -88,7 +112,7 @@ Remix Conf 2023
 }
 ```
 
-```json title="ValidityState" subtitle="if an required input is empty"
+```json title="ValidityState" subtitle="if a required input is empty"
 {
   "badInput": false,
   "customError": false,
@@ -109,34 +133,7 @@ Remix Conf 2023
 
 <CodeSurfer theme={code}>
 
-```jsx title="setCustomValidity"
-<input
-  onChange={event => {
-    // The input element
-    const input = event.currentTarget;
-
-    if (input.validity.valueMissing) {
-      input.setCustomValidity('This field is required');
-    } else if (input.validity.typeMismatch) {
-      input.setCustomValidity('This field is invalid');
-    } else {
-      // Reset the error message
-      input.setCustomValidity('');
-    }
-
-    // To access the error message
-    console.log(input.validationMessage);
-  }}
-/>
-```
-
-</CodeSurfer>
-
----
-
-<CodeSurfer theme={code}>
-
-```jsx title="invalid event" subtitle="By default, the browser will fire an invalid event on submission"
+```jsx title="invalid event" subtitle="The browser will fire invalid event on submission by default"
 <input
   onInvalid={event => {
     // The invalid form element
@@ -151,7 +148,13 @@ Remix Conf 2023
 />
 ```
 
-```jsx title="reportValidity" subtitle="But you can customize the time when it should fire the invalid event" 
+</CodeSurfer>
+
+---
+
+<CodeSurfer theme={code}>
+
+```jsx title="reportValidity" subtitle="Customize when the browser should fire invalid event" 
 <form
   onSubmit={event => {
     const form = event.currentTarget;
@@ -173,7 +176,7 @@ Remix Conf 2023
 
 <Layout>
 
-## A Remix Recipe
+## A Remix Recipe 🧑‍🍳
 
 </Layout>
 
@@ -194,7 +197,7 @@ Remix Conf 2023
 
 <Example src="./examples/report-error" />
 
-```jsx file=./02.ReportingErrors.jsx
+```jsx 10,21 file=./02.ReportingErrors.jsx
 ```
 
 </Step>
@@ -223,7 +226,19 @@ Remix Conf 2023
 
 <Layout>
 
-# How about the server?
+## How about the server?
+
+</Layout>
+
+---
+
+<Layout>
+
+## The secret sauce 🔥: @conform-to/validitystate
+
+- A package for you to validate on the server based on the ValidityState 
+- Type inference support
+- 0kb on the client. You need it only on the server
 
 </Layout>
 
@@ -256,7 +271,7 @@ Remix Conf 2023
 ```
 </Step>
 
-<Step subtitle="The secret sauce">
+<Step subtitle="Import the parse helper">
 
 <Example src="./examples/final" />
 
@@ -265,11 +280,11 @@ Remix Conf 2023
 
 </Step>
 
-<Step subtitle="Parse formdata based on the schema">
+<Step subtitle="Parse formData based on the schema">
 
 <Example src="./examples/final" />
 
-```diff 31:43
+```jsx 31:43 file=./06.CompleteSolution.jsx
 ```
 
 </Step>
@@ -284,14 +299,6 @@ Remix Conf 2023
 </Step>
 
 </CodeSurferColumns>
-
----
-
-<Layout>
-
-## Progressive Enhancement
-
-</Layout>
 
 ---
 
