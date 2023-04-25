@@ -20,7 +20,7 @@
     }
 
     #example input + p {
-        @apply mt-2 h-4 leading-4 text-sm;
+        @apply mt-2 leading-4 text-sm;
     }
 
     #example button {

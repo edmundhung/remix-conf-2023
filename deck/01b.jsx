@@ -1,0 +1,33 @@
+import { Form } from '@remix-run/react';
+
+export default function SignupForm() {
+  return (
+    <Form method="post">
+      <div>
+        <label>Email</label>
+        <input
+          name="email"
+          type="email"
+          required
+        />
+      </div>
+      <div>
+        <label>Password</label>
+        <input
+          name="password"
+          type="password"
+          required
+        />
+      </div>
+      <div>
+        <label>Confirm Password</label>
+        <input
+          name="confirmPassword"
+          type="password"
+          required
+        />
+      </div>
+      <button>Signup</button>
+    </Form>
+  );
+}

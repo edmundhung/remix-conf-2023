@@ -1,6 +1,6 @@
 import { Form } from '@remix-run/react';
 
-export default function LoginForm() {
+export default function SignupForm() {
   return (
     <Form method="post">
       <div>
@@ -8,8 +8,6 @@ export default function LoginForm() {
         <input
           name="email"
           type="email"
-          required
-          pattern="[^@]+@[A-Za-z0-9]+.[A-Za-z0-9]+"
         />
       </div>
       <div>
@@ -17,10 +15,16 @@ export default function LoginForm() {
         <input
           name="password"
           type="password"
-          required
         />
       </div>
-      <button>Login</button>
+      <div>
+        <label>Confirm Password</label>
+        <input
+          name="confirmPassword"
+          type="password"
+        />
+      </div>
+      <button>Signup</button>
     </Form>
   );
 }

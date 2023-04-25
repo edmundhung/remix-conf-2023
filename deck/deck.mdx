@@ -28,194 +28,130 @@ export const theme = deck;
 
 ---
 
-<CodeSurfer theme={code}>
-
-```jsx title="HTML Validation Attributes"
-
-
-```
-
-```jsx title="HTML Validation Attributes"
-<input required />
-```
-
-```jsx title="HTML Validation Attributes"
-<input required />
-
-<input type="number" min={0} max={5} step={0.5} />
-
-<input type="email" pattern="[^@]+@example.com" />
-
-<textarea minLength={10} maxLength={100} />
-```
-
-</CodeSurfer>
-
----
-
-<Layout>
-
-## Issues
-
-- Error bubbles look different on each browser
-- Styles are not customizable
-- Same problems with the error messages
-- Report only 1 problem at a time
-
-</Layout>
-
----
-
-<Layout>
-
-## What we missed: The DOM APIs
-
-</Layout>
-
----
-
-<CodeSurfer theme={code}>
-
-```jsx title="validationMessage"
-<input
-  onChange={event => {
-    const input = event.currentTarget;
-
-    // Current error message
-    console.log(input.validationMessage);
-
-    // ValidityState
-    console.log(input.validity);
-  }}
-/>
-```
-
-</CodeSurfer>
-
----
-
-<CodeSurfer theme={code}>
-
-```json title="ValidityState"
-{
-  "badInput": false,
-  "customError": false,
-  "patternMismatch": false,
-  "rangeOverflow": false,
-  "rangeUnderflow": false,
-  "stepMismatch": false,
-  "tooLong": false,
-  "tooShort": false,
-  "typeMismatch": false,
-  "valid": true,
-  "valueMissing": false
-}
-```
-
-```json title="ValidityState" subtitle="if a required input is empty"
-{
-  "badInput": false,
-  "customError": false,
-  "patternMismatch": false,
-  "rangeOverflow": false,
-  "rangeUnderflow": false,
-  "stepMismatch": false,
-  "tooLong": false,
-  "tooShort": false,
-  "typeMismatch": false,
-  "valid": false,
-  "valueMissing": true
-}
-```
-</CodeSurfer>
-
----
-
-<CodeSurfer theme={code}>
-
-```jsx title="invalid event" subtitle="The browser will fire invalid event on submission by default"
-<input
-  onInvalid={event => {
-    // The invalid form element
-    const input = event.currentTarget;
-
-    // The error message:
-    console.log(input.validationMessage)
-
-    // Prevent browser error bubble
-    event.preventDefault();
-  }}
-/>
-```
-
-</CodeSurfer>
-
----
-
-<CodeSurfer theme={code}>
-
-```jsx title="reportValidity" subtitle="Customize when the browser should fire invalid event" 
-<form
-  onSubmit={event => {
-    const form = event.currentTarget;
-
-    // By calling reportValidity, the browser will fire
-    // the invalid event on all invalid form elements
-    if (!form.reportValidity()) {
-      // Prevent form submit if there are any errors
-      event.preventDefault();
-    }
-  }}
-  noValidate
-/>
-```
-
-</CodeSurfer>
-
----
-
-<Layout>
-
-## A Remix Recipe 🧑‍🍳
-
-</Layout>
-
----
-
-<CodeSurferColumns themes={[demo, code]} sizes={[2,3]}>
+<CodeSurferColumns themes={[demo, code]} sizes={[1,2]}>
 
 <Step>
 
-<Example src="./examples/basic" />
+<Example src="./examples/1a" />
 
-```jsx file=./01.BaseExample.jsx
+```jsx file=./01a.jsx title="HTML Form"
 ```
 
 </Step>
 
-<Step subtitle="Reporting error manually with the invalid event">
+<Step>
 
-<Example src="./examples/report-error" />
+<Example src="./examples/1a" />
 
-```jsx 10,21 file=./02.ReportingErrors.jsx
+```jsx file=./01b.jsx title="Validation Attributes"
 ```
 
 </Step>
 
-<Step subtitle="Clearing messages before reporting new errors">
+<Step>
 
-<Example src="./examples/clear-error" />
+<Example src="./examples/1c" />
 
-```jsx file=./03.ClearingErrors.jsx
+```jsx file=./01c.jsx title="Validation Attributes"
 ```
 
 </Step>
 
-<Step subtitle="Customizing messages based on the ValidityState">
+<Step>
 
-<Example src="./examples/custom-message" />
+<Example src="./examples/1c" />
 
-```jsx file=./04.CustomizingMessage.jsx
+```diff title="Overview"
+```
+
+</Step>
+
+<Step>
+
+<Example src="./examples/2a" />
+
+```jsx file=./02a.jsx title="Disable brower validation"
+```
+
+</Step>
+
+<Step>
+
+<Example src="./examples/2b" />
+
+```jsx file=./02b.jsx title="Enhancing form validation with reportValidty"
+```
+
+</Step>
+
+<Step>
+
+<Example src="./examples/3a" />
+
+```jsx file=./03a.jsx title="Customizing messages with setCustomValidity"
+```
+
+</Step>
+
+<Step>
+
+<Example src="./examples/3b" />
+
+```jsx file=./03b.jsx title="Inspect errors through the ValidityState"
+```
+
+</Step>
+
+<Step>
+
+<Example src="./examples/3c" />
+
+```jsx file=./03c.jsx title="FormData"
+```
+
+</Step>
+
+<Step>
+
+<Example src="./examples/3c" />
+
+```diff 3:31 title="Overview"
+```
+
+</Step>
+
+<Step>
+
+<Example src="./examples/4a" />
+
+```jsx 35,40:49 file=./04a.jsx title="Capturing messages through invalid event"
+```
+
+</Step>
+
+<Step>
+
+<Example src="./examples/4b" />
+
+```jsx file=./04b.jsx title="Displaying error next to the input"
+```
+
+</Step>
+
+<Step>
+
+<Example src="./examples/4c" />
+
+```jsx file=./04c.jsx title="Clearing error before reporting"
+```
+
+</Step>
+
+<Step>
+
+<Example src="./examples/4c" />
+
+```diff 34:67 title="Finish"
 ```
 
 </Step>
@@ -236,7 +172,7 @@ export const theme = deck;
 
 ## The secret sauce 🔥: @conform-to/validitystate
 
-- A package for you to validate on the server based on the ValidityState 
+- A package for you to validate on the server with the ValidityState 
 - Type inference support
 - 0kb on the client. You need it only on the server
 
@@ -244,61 +180,69 @@ export const theme = deck;
 
 ---
 
-<CodeSurferColumns themes={[demo, code]} sizes={[2,3]}>
+<CodeSurferColumns themes={[demo, code]} sizes={[1,2]}>
 
 <Step>
 
-<Example src="./examples/custom-message" />
+<Example src="./examples/4c" />
 
-```jsx 46:66 file=./04.CustomizingMessage.jsx
+```jsx 68:99 file=./04c.jsx
 ```
 
 </Step>
 
-<Step subtitle="Extract the constraint of each form control as the schema">
+<Step>
 
-<Example src="./examples/final" />
+<Example src="./examples/5a" />
 
-```jsx 63,72 file=./05.ExtractSchema.jsx
+```jsx 90,99,108 file=./05a.jsx title="Extract the constraint of each form control as the schema"
 ```
 </Step>
 
-<Step subtitle="Extract the constraint of each form control as the schema">
+<Step>
 
-<Example src="./examples/final" />
+<Example src="./examples/5a" />
 
-```diff 4:14
+```diff 4:19 title="Extract the constraint of each form control as the schema"
 ```
 </Step>
 
-<Step subtitle="Import the parse helper">
+<Step>
 
-<Example src="./examples/final" />
+<Example src="./examples/5b" />
 
-```jsx 1 file=./06.CompleteSolution.jsx
-```
-
-</Step>
-
-<Step subtitle="Parse formData based on the schema">
-
-<Example src="./examples/final" />
-
-```jsx 31:43 file=./06.CompleteSolution.jsx
+```jsx 1 file=./05b.jsx title="Import the parse helper"
 ```
 
 </Step>
 
-<Step subtitle="Sync error with the client">
+<Step>
 
-<Example src="./examples/final" />
+<Example src="./examples/5b" />
 
-```diff 46:54
+```diff 54:66 title="Parse formData based on the schema"
+```
+
+</Step>
+
+<Step>
+
+<Example src="./examples/5c" />
+
+```jsx 69:77 file=./05c.jsx title="Sync error with the client"
 ```
 
 </Step>
 
 </CodeSurferColumns>
+
+---
+
+<Layout>
+
+## Comparision
+
+</Layout>
 
 ---
 
