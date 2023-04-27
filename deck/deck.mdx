@@ -4,7 +4,7 @@ import {
   Step,
 } from "code-surfer";
 import { demo, code, deck } from "./theme";
-import { Example, Layout } from './layout';
+import { Picture, Example, Layout } from './layout';
 
 export const theme = deck;
 
@@ -41,15 +41,6 @@ export const theme = deck;
 
 <Step>
 
-<Example src="./examples/1b" />
-
-```jsx file=./01b.jsx title="Validation Attributes"
-```
-
-</Step>
-
-<Step>
-
 <Example src="./examples/1c" />
 
 ```jsx file=./01c.jsx title="Validation Attributes"
@@ -57,11 +48,46 @@ export const theme = deck;
 
 </Step>
 
+</CodeSurferColumns>
+
+---
+
+
+<Layout>
+
+## 1. Disable default browser validation
+
+</Layout>
+
+---
+
+<Layout>
+
+### Default validation flow
+
+<Picture src="/assets/01-default-validation-flow.png" />
+
+</Layout>
+
+---
+
+<Layout>
+
+### Enhanced validation flow
+
+<Picture src="/assets/02-enhanced-validation-flow.png" />
+
+</Layout>
+
+---
+
+<CodeSurferColumns themes={[demo, code]} sizes={[1,2]}>
+
 <Step>
 
 <Example src="./examples/1c" />
 
-```diff title="Overview"
+```jsx file=./01c.jsx title="Previous example"
 ```
 
 </Step>
@@ -70,7 +96,7 @@ export const theme = deck;
 
 <Example src="./examples/2a" />
 
-```jsx file=./02a.jsx title="Disable brower validation"
+```jsx file=./02a.jsx title="Disable default brower validation"
 ```
 
 </Step>
@@ -79,7 +105,40 @@ export const theme = deck;
 
 <Example src="./examples/2b" />
 
-```jsx file=./02b.jsx title="Enhancing form validation with reportValidty"
+```jsx file=./02b.jsx title="Re-implement form validation with reportValidty"
+```
+
+</Step>
+
+</CodeSurferColumns>
+
+---
+
+<Layout>
+
+### The `validity` property and `setCustomValidity` method
+
+</Layout>
+
+---
+
+<Layout>
+
+### New validation flow with error customized
+
+<Picture src="/assets/03-updated-validation-flow.png" />
+
+</Layout>
+
+---
+
+<CodeSurferColumns themes={[demo, code]} sizes={[1,2]}>
+
+<Step>
+
+<Example src="./examples/2b" />
+
+```jsx file=./02b.jsx title="Previous example"
 ```
 
 </Step>
@@ -95,27 +154,32 @@ export const theme = deck;
 
 <Step>
 
-<Example src="./examples/3b" />
+<Example src="./examples/3c" />
 
-```jsx file=./03b.jsx title="Inspect errors through the ValidityState"
+```jsx file=./03c.jsx title="Derives message based on the ValidityState"
 ```
 
 </Step>
+
+</CodeSurferColumns>
+
+---
+
+<Layout>
+
+### The invalid event
+
+</Layout>
+
+---
+
+<CodeSurferColumns themes={[demo, code]} sizes={[1,2]}>
 
 <Step>
 
 <Example src="./examples/3c" />
 
-```jsx file=./03c.jsx title="Manual Validation with the FormData"
-```
-
-</Step>
-
-<Step>
-
-<Example src="./examples/3c" />
-
-```diff 3:31 title="Overview"
+```jsx file=./03c.jsx title="Previous example"
 ```
 
 </Step>
@@ -162,6 +226,16 @@ export const theme = deck;
 
 <Layout>
 
+### Final validation flow with error captured
+
+<Picture src="/assets/04-final-validation-flow.png" />
+
+</Layout>
+
+---
+
+<Layout>
+
 ## How about the server?
 
 </Layout>
@@ -170,7 +244,7 @@ export const theme = deck;
 
 <Layout>
 
-## The secret sauce 🔥: @conform-to/validitystate
+## 🔥 Introducing: @conform-to/validitystate
 
 - A package for you to validate on the server with the ValidityState 
 - Type inference support
@@ -240,7 +314,7 @@ export const theme = deck;
 
 <Layout>
 
-## Comparision
+## Summary
 
 </Layout>
 

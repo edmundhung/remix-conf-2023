@@ -1,10 +1,15 @@
 import React from 'react';
 
-export function Example({ src, style }) {
+function getUrl(src) {
   const base = process.env.NODE_ENV === 'development'
     ? 'http://localhost:8788'
     : 'https://remix-conf-2023.edmund.dev';
-  const url = new URL(src, base);
+
+  return new URL(src, base);
+}
+
+export function Example({ src, style }) {
+  const url = getUrl(src);
   
   return (
     <iframe
@@ -12,6 +17,14 @@ export function Example({ src, style }) {
       style={{ height: '100%', width: '100%', border: 'none', backgroundColor: 'rgb(229 231 235)', ...style }}
       title="example"
     />
+  );
+}
+
+export function Picture({ src, style }) {
+  const url = getUrl(src);
+
+  return (
+    <img src={url} style={{ maxWidth: '85vw', ...style }} />
   );
 }
 
