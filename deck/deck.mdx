@@ -68,9 +68,7 @@ export const theme = deck;
 
 ---
 
-<Layout>
-
-### Enhancing the validation flow
+<Layout title="Enhancing the validation flow">
 
 <Picture src="/assets/enhanced-validation-flow.png" />
 
@@ -136,7 +134,7 @@ interface HTMLInputElement {
 ```
 
 ```jsx title="validationMessage & setCustomValidity(message)"
-const [input] = docuemnt.getElements.byTagName('input');
+const [input] = docuemnt.getElementsByTagName('input');
 
 // The browser error message on error bubble
 console.log(input.validationMessage);
@@ -159,38 +157,15 @@ console.log(input.validationMessage);
 {
   "badInput": false,
   "customError": false,
-  "patternMismatch": false,
-  "rangeOverflow": false,
-  "rangeUnderflow": false,
-  "stepMismatch": false,
-  "tooLong": false,
-  "tooShort": false,
-  "typeMismatch": false,
+  "patternMismatch": false, // pattern
+  "rangeOverflow": false,   // max
+  "rangeUnderflow": false,  // min
+  "stepMismatch": false,    // step
+  "tooLong": false,         // maxlength
+  "tooShort": false,        // minlength
+  "typeMismatch": false,    // type
   "valid": true,
-  "valueMissing": false
-}
-```
-
-</Step>
-
-<Step>
-
-```diff 4 title="The error interface"
-```
-
-```jsx title="ValidityState"
-{
-  "badInput": false,
-  "customError": false,
-  "patternMismatch": false,
-  "rangeOverflow": false,
-  "rangeUnderflow": false,
-  "stepMismatch": false,
-  "tooLong": false,
-  "tooShort": false,
-  "typeMismatch": false,
-  "valid": false,
-  "valueMissing": true
+  "valueMissing": false     // required
 }
 ```
 
@@ -249,6 +224,14 @@ console.log(input.validationMessage);
 
 ---
 
+<Layout title="Final validation flow with error captured">
+
+<Picture src="/assets/final-validation-flow.png" />
+
+</Layout>
+
+---
+
 <CodeSurferColumns themes={[demo, code]} sizes={[1,2]}>
 
 <Step>
@@ -282,14 +265,6 @@ console.log(input.validationMessage);
 
 ---
 
-<Layout title="Final validation flow with error captured">
-
-<Picture src="/assets/final-validation-flow.png" />
-
-</Layout>
-
----
-
 <Layout>
 
 ## How about the server?
@@ -304,7 +279,7 @@ console.log(input.validationMessage);
 
 - A package for you to validate on the server with the ValidityState 
 - Type inference support
-- 0kb on the client. You need it only on the server
+- 0 kb on the client. You need it only on the server
 
 </Layout>
 
@@ -325,7 +300,7 @@ console.log(input.validationMessage);
 
 <Example src="./examples/5a" />
 
-```jsx 90,99,108 file=./05a.jsx title="Extract the constraint of each form control as the schema"
+```jsx 90,99,108 file=./05a.jsx title="Extract the constraint of each form control"
 ```
 </Step>
 
@@ -333,7 +308,7 @@ console.log(input.validationMessage);
 
 <Example src="./examples/5a" />
 
-```diff 4:19 title="Extract the constraint of each form control as the schema"
+```diff 4:19 title="Extract the constraint of each form control"
 ```
 </Step>
 
@@ -378,7 +353,7 @@ console.log(input.validationMessage);
 
 <Layout>
 
-## Learn more
+## Thank You
 
 https://edmund.dev/blog/remixing-constraint-validation
 
