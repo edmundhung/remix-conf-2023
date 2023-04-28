@@ -3,7 +3,7 @@ import {
   CodeSurferColumns,
   Step,
 } from "code-surfer";
-import { demo, code, deck } from "./theme";
+import { demo, code, code2, deck } from "./theme";
 import { Picture, Example, Layout } from './layout';
 
 export const theme = deck;
@@ -11,8 +11,6 @@ export const theme = deck;
 <Layout>
 
 # Remixing Constraint Validation
-
-<div styles={{ textAlign: 'right '}}>Edmund Hung @ Remix Conf 2023</div>
 
 </Layout>
 
@@ -41,9 +39,18 @@ export const theme = deck;
 
 <Step>
 
-<Example src="./examples/1c" />
+<Example src="./examples/1b" />
 
-```jsx file=./01c.jsx title="Validation Attributes"
+```diff 10 title="Validation Attributes"
+```
+
+</Step>
+
+<Step>
+
+<Example src="./examples/1b" />
+
+```jsx 8:12,16:22,26:30 file=./01b.jsx title="Validation Attributes"
 ```
 
 </Step>
@@ -55,7 +62,7 @@ export const theme = deck;
 
 <Layout>
 
-## 1. Disable default browser validation
+## Disable browser validation
 
 </Layout>
 
@@ -63,19 +70,9 @@ export const theme = deck;
 
 <Layout>
 
-### Default validation flow
+### Enhancing the validation flow
 
-<Picture src="/assets/01-default-validation-flow.png" />
-
-</Layout>
-
----
-
-<Layout>
-
-### Enhanced validation flow
-
-<Picture src="/assets/02-enhanced-validation-flow.png" />
+<Picture src="/assets/enhanced-validation-flow.png" />
 
 </Layout>
 
@@ -85,9 +82,9 @@ export const theme = deck;
 
 <Step>
 
-<Example src="./examples/1c" />
+<Example src="./examples/1b" />
 
-```jsx file=./01c.jsx title="Previous example"
+```jsx file=./01b.jsx
 ```
 
 </Step>
@@ -105,7 +102,7 @@ export const theme = deck;
 
 <Example src="./examples/2b" />
 
-```jsx file=./02b.jsx title="Re-implement form validation with reportValidty"
+```jsx file=./02b.jsx title="Then re-enable it using form.reportValidty()"
 ```
 
 </Step>
@@ -114,19 +111,98 @@ export const theme = deck;
 
 ---
 
-<Layout>
+<CodeSurferColumns themes={[code2, code]} sizes={[1,2]}>
 
-### The `validity` property and `setCustomValidity` method
+<Step>
 
-</Layout>
+```ts title="The error interface"
+interface HTMLInputElement {
+  validationMessage: string; 
+  setCustomValidity(error: string): void;
+  validity: ValidityState;
+}
+```
+
+```jsx
+
+
+```
+
+</Step>
+
+<Step>
+
+```diff 2,3 title="The error interface"
+```
+
+```jsx title="validationMessage & setCustomValidity(message)"
+const [input] = docuemnt.getElements.byTagName('input');
+
+// The browser error message on error bubble
+console.log(input.validationMessage);
+
+// Override the message
+input.setCustomValidity('This is invalid');
+
+// It prints "This is invalid" now
+console.log(input.validationMessage);
+```
+
+</Step>
+
+<Step>
+
+```diff 4 title="The error interface"
+```
+
+```jsx title="ValidityState"
+{
+  "badInput": false,
+  "customError": false,
+  "patternMismatch": false,
+  "rangeOverflow": false,
+  "rangeUnderflow": false,
+  "stepMismatch": false,
+  "tooLong": false,
+  "tooShort": false,
+  "typeMismatch": false,
+  "valid": true,
+  "valueMissing": false
+}
+```
+
+</Step>
+
+<Step>
+
+```diff 4 title="The error interface"
+```
+
+```jsx title="ValidityState"
+{
+  "badInput": false,
+  "customError": false,
+  "patternMismatch": false,
+  "rangeOverflow": false,
+  "rangeUnderflow": false,
+  "stepMismatch": false,
+  "tooLong": false,
+  "tooShort": false,
+  "typeMismatch": false,
+  "valid": false,
+  "valueMissing": true
+}
+```
+
+</Step>
+
+</CodeSurferColumns>
 
 ---
 
-<Layout>
+<Layout title="New validation flow with error customized">
 
-### New validation flow with error customized
-
-<Picture src="/assets/03-updated-validation-flow.png" />
+<Picture src="/assets/updated-validation-flow.png" />
 
 </Layout>
 
@@ -138,7 +214,7 @@ export const theme = deck;
 
 <Example src="./examples/2b" />
 
-```jsx file=./02b.jsx title="Previous example"
+```jsx file=./02b.jsx
 ```
 
 </Step>
@@ -154,9 +230,9 @@ export const theme = deck;
 
 <Step>
 
-<Example src="./examples/3c" />
+<Example src="./examples/3b" />
 
-```jsx file=./03c.jsx title="Derives message based on the ValidityState"
+```jsx file=./03b.jsx title="Derives message based on the ValidityState"
 ```
 
 </Step>
@@ -165,9 +241,9 @@ export const theme = deck;
 
 ---
 
-<Layout>
+<Layout title="The invalid event">
 
-### The invalid event
+<Picture src="/assets/the-invalid-event.png" />
 
 </Layout>
 
@@ -177,9 +253,9 @@ export const theme = deck;
 
 <Step>
 
-<Example src="./examples/3c" />
+<Example src="./examples/3b" />
 
-```jsx file=./03c.jsx title="Previous example"
+```jsx file=./03b.jsx
 ```
 
 </Step>
@@ -188,7 +264,7 @@ export const theme = deck;
 
 <Example src="./examples/4a" />
 
-```jsx 35,40:49 file=./04a.jsx title="Capturing messages through invalid event"
+```jsx 35,40:49,60 file=./04a.jsx title="Capturing messages through invalid event"
 ```
 
 </Step>
@@ -202,33 +278,13 @@ export const theme = deck;
 
 </Step>
 
-<Step>
-
-<Example src="./examples/4c" />
-
-```jsx file=./04c.jsx title="Clearing error before reporting"
-```
-
-</Step>
-
-<Step>
-
-<Example src="./examples/4c" />
-
-```diff 34:67 title="Finish"
-```
-
-</Step>
-
 </CodeSurferColumns>
 
 ---
 
-<Layout>
+<Layout title="Final validation flow with error captured">
 
-### Final validation flow with error captured
-
-<Picture src="/assets/04-final-validation-flow.png" />
+<Picture src="/assets/final-validation-flow.png" />
 
 </Layout>
 
@@ -244,7 +300,7 @@ export const theme = deck;
 
 <Layout>
 
-## 🔥 Introducing: @conform-to/validitystate
+### 🔥 Introducing @conform-to/validitystate
 
 - A package for you to validate on the server with the ValidityState 
 - Type inference support
@@ -258,9 +314,9 @@ export const theme = deck;
 
 <Step>
 
-<Example src="./examples/4c" />
+<Example src="./examples/4b" />
 
-```jsx 68:99 file=./04c.jsx
+```jsx 68:99 file=./04b.jsx
 ```
 
 </Step>
@@ -314,7 +370,7 @@ export const theme = deck;
 
 <Layout>
 
-## Summary
+## It's just "The Web"
 
 </Layout>
 

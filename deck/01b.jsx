@@ -17,6 +17,8 @@ export default function SignupForm() {
           name="password"
           type="password"
           required
+          minLength={8}
+          pattern="(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[1-9]).*"
         />
       </div>
       <div>

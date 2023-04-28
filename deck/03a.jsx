@@ -1,6 +1,6 @@
 import { Form } from '@remix-run/react';
 
-function formatError({ input }) {
+function formatError({ input, formData }) {
   return '';
 }
 
@@ -10,10 +10,11 @@ export default function SignupForm() {
       method="post"
       onSubmit={event => {
         const form = event.currentTarget;
+        const formData = new FormData(form);
 
         for (const input of form.elements) {
           if (input instanceof HTMLInputElement) {
-            input.setCustomValidity(formatError({ input }));
+            input.setCustomValidity(formatError({ input, formData }));
           }
         }
 

@@ -57,6 +57,8 @@ export default function SignupForm() {
           }
         }
 
+        setError({});
+
         if (!form.reportValidity()) {
           event.preventDefault();
         }

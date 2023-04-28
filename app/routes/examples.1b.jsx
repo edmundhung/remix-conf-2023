@@ -8,6 +8,7 @@ export default function SignupForm() {
         <input
           name="email"
           type="email"
+          autoComplete="off"
           required
         />
       </div>
@@ -17,6 +18,8 @@ export default function SignupForm() {
           name="password"
           type="password"
           required
+          minLength={8}
+          pattern="(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[1-9]).*"
         />
       </div>
       <div>

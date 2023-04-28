@@ -54,6 +54,14 @@ export const code = {
     }
 };
 
+export const code2 = {
+  ...code,
+  "colors": {
+    ...code.colors,
+    "background": "rgb(243, 244, 246)",
+  },
+};
+
 export const demo = {
     fonts: {
     //   body: '"Helvetica Neue", Helvetica, Arial, sans-serif',

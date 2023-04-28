@@ -1,6 +1,6 @@
 import { Form } from '@remix-run/react';
 
-function formatError({ input }) {
+function formatError({ input, formData }) {
   switch (input.name) {
     case 'email':
       if (input.validity.valueMissing) {
@@ -21,6 +21,8 @@ function formatError({ input }) {
     case 'confirmPassword':
       if (input.validity.valueMissing) {
         return 'Confirm password is required';
+      } else if (input.value !== formData.get('password')) {
+        return 'Passwords do not match';
       }
       break;
   }
@@ -34,10 +36,11 @@ export default function SignupForm() {
       method="post"
       onSubmit={event => {
         const form = event.currentTarget;
+        const formData = new FormData(form);
 
         for (const input of form.elements) {
           if (input instanceof HTMLInputElement) {
-            input.setCustomValidity(formatError({ input }));
+            input.setCustomValidity(formatError({ input, formData }));
           }
         }
 
