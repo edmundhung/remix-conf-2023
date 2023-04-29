@@ -62,7 +62,7 @@ export const theme = deck;
 
 <Layout>
 
-## Disable browser validation
+## Disable default browser validation
 
 </Layout>
 
@@ -100,7 +100,16 @@ export const theme = deck;
 
 <Example src="./examples/2b" />
 
-```jsx file=./02b.jsx title="Then re-enable it using form.reportValidty()"
+```jsx file=./02b.jsx title="Reimplement using form.reportValidity()"
+```
+
+</Step>
+
+<Step>
+
+<Example src="./examples/2b" />
+
+```diff 10:12 title="Reimplement using form.reportValidity()"
 ```
 
 </Step>
@@ -133,16 +142,16 @@ interface HTMLInputElement {
 ```diff 2,3 title="The error interface"
 ```
 
-```jsx title="validationMessage & setCustomValidity(message)"
-const [input] = docuemnt.getElementsByTagName('input');
+```jsx title="Validation message"
+const [input] = document.getElementsByTagName('input');
 
-// The browser error message on error bubble
+// Check message on error bubble
 console.log(input.validationMessage);
 
-// Override the message
+// Override message
 input.setCustomValidity('This is invalid');
 
-// It prints "This is invalid" now
+// See updated message
 console.log(input.validationMessage);
 ```
 
@@ -198,7 +207,7 @@ console.log(input.validationMessage);
 
 <Example src="./examples/3a" />
 
-```jsx file=./03a.jsx title="Customizing messages with setCustomValidity"
+```jsx file=./03a.jsx title="Customize messages with setCustomValidity"
 ```
 
 </Step>
@@ -207,7 +216,7 @@ console.log(input.validationMessage);
 
 <Example src="./examples/3b" />
 
-```jsx file=./03b.jsx title="Derives message based on the ValidityState"
+```jsx file=./03b.jsx title="Derive messages based on ValidityState"
 ```
 
 </Step>
@@ -216,15 +225,7 @@ console.log(input.validationMessage);
 
 ---
 
-<Layout title="The invalid event">
-
-<Picture src="/assets/the-invalid-event.png" />
-
-</Layout>
-
----
-
-<Layout title="Final validation flow with error captured">
+<Layout title="Validation flow with error synchronized">
 
 <Picture src="/assets/final-validation-flow.png" />
 
@@ -247,7 +248,7 @@ console.log(input.validationMessage);
 
 <Example src="./examples/4a" />
 
-```jsx 35,40:49,60 file=./04a.jsx title="Capturing messages through invalid event"
+```jsx 35,40:49,60 file=./04a.jsx title="Synchronize messages through invalid event"
 ```
 
 </Step>
@@ -256,7 +257,7 @@ console.log(input.validationMessage);
 
 <Example src="./examples/4b" />
 
-```jsx file=./04b.jsx title="Displaying error next to the input"
+```jsx file=./04b.jsx title="Display error next to the input"
 ```
 
 </Step>
@@ -277,9 +278,9 @@ console.log(input.validationMessage);
 
 ### 🔥 Introducing @conform-to/validitystate
 
-- A package for you to validate on the server with the ValidityState 
+- A package for you to perform server validation based on ValidityState
 - Type inference support
-- 0 kb on the client. You need it only on the server
+- 0 kb on the client
 
 </Layout>
 
@@ -300,7 +301,7 @@ console.log(input.validationMessage);
 
 <Example src="./examples/5a" />
 
-```jsx 90,99,108 file=./05a.jsx title="Extract the constraint of each form control"
+```jsx 90,99,108 file=./05a.jsx title="Extract constraints of each form control"
 ```
 </Step>
 
@@ -308,7 +309,7 @@ console.log(input.validationMessage);
 
 <Example src="./examples/5a" />
 
-```diff 4:19 title="Extract the constraint of each form control"
+```diff 4:19 title="Extract constraints of each form control"
 ```
 </Step>
 
@@ -316,7 +317,7 @@ console.log(input.validationMessage);
 
 <Example src="./examples/5b" />
 
-```jsx 1 file=./05b.jsx title="Import the parse helper"
+```jsx 1 file=./05b.jsx title="Import parse helper"
 ```
 
 </Step>
@@ -325,7 +326,7 @@ console.log(input.validationMessage);
 
 <Example src="./examples/5b" />
 
-```diff 54:66 title="Parse formData based on the schema"
+```diff 54:66 title="Parse formData based on schema"
 ```
 
 </Step>
@@ -334,7 +335,7 @@ console.log(input.validationMessage);
 
 <Example src="./examples/5c" />
 
-```jsx 69:77 file=./05c.jsx title="Sync error with the client"
+```jsx 69:77 file=./05c.jsx title="Synchronize error with client error state"
 ```
 
 </Step>
