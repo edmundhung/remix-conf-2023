@@ -1,5 +1,4 @@
 import {
-  CodeSurfer,
   CodeSurferColumns,
   Step,
 } from "code-surfer";
@@ -30,16 +29,16 @@ export const theme = deck;
 
 <Step>
 
-<Example src="./examples/1a" />
+<Example src="./examples/html-form" />
 
-```jsx file=./01a.jsx title="HTML Form"
+```jsx file=./src/html-form.jsx title="HTML Form"
 ```
 
 </Step>
 
 <Step>
 
-<Example src="./examples/1b" />
+<Example src="./examples/html-form" />
 
 ```diff 10 title="Validation Attributes"
 ```
@@ -48,9 +47,9 @@ export const theme = deck;
 
 <Step>
 
-<Example src="./examples/1b" />
+<Example src="./examples/validation-attributes" />
 
-```jsx 8:12,16:22,26:30 file=./01b.jsx title="Validation Attributes"
+```jsx 8:12,16:22,26:30 file=./src/validation-attributes.jsx title="Validation Attributes"
 ```
 
 </Step>
@@ -80,34 +79,34 @@ export const theme = deck;
 
 <Step>
 
-<Example src="./examples/1b" />
+<Example src="./examples/validation-attributes" />
 
-```jsx file=./01b.jsx
+```jsx file=./src/validation-attributes.jsx
 ```
 
 </Step>
 
 <Step>
 
-<Example src="./examples/2a" />
+<Example src="./examples/disable-browser-validation" />
 
-```jsx file=./02a.jsx title="Disable default brower validation"
+```jsx file=./src/disable-browser-validation.jsx title="Disable default brower validation"
 ```
 
 </Step>
 
 <Step>
 
-<Example src="./examples/2b" />
+<Example src="./examples/reimplement-browser-validation" />
 
-```jsx file=./02b.jsx title="Reimplement using form.reportValidity()"
+```jsx file=./src/reimplement-browser-validation.jsx title="Reimplement using form.reportValidity()"
 ```
 
 </Step>
 
 <Step>
 
-<Example src="./examples/2b" />
+<Example src="./examples/reimplement-browser-validation" />
 
 ```diff 10:12 title="Reimplement using form.reportValidity()"
 ```
@@ -196,27 +195,27 @@ console.log(input.validationMessage);
 
 <Step>
 
-<Example src="./examples/2b" />
+<Example src="./examples/reimplement-browser-validation" />
 
-```jsx file=./02b.jsx
+```jsx file=./src/reimplement-browser-validation.jsx
 ```
 
 </Step>
 
 <Step>
 
-<Example src="./examples/3a" />
+<Example src="./examples/customize-messages" />
 
-```jsx file=./03a.jsx title="Customize messages with setCustomValidity"
+```jsx file=./src/customize-messages.jsx title="Customize messages with setCustomValidity"
 ```
 
 </Step>
 
 <Step>
 
-<Example src="./examples/3b" />
+<Example src="./examples/derive-messages" />
 
-```jsx file=./03b.jsx title="Derive messages based on ValidityState"
+```jsx file=./src/derive-messages.jsx title="Derive messages based on ValidityState"
 ```
 
 </Step>
@@ -237,27 +236,27 @@ console.log(input.validationMessage);
 
 <Step>
 
-<Example src="./examples/3b" />
+<Example src="./examples/derive-messages" />
 
-```jsx file=./03b.jsx
+```jsx file=./src/derive-messages.jsx
 ```
 
 </Step>
 
 <Step>
 
-<Example src="./examples/4a" />
+<Example src="./examples/synchronize-messages" />
 
-```jsx 35,40:49,60 file=./04a.jsx title="Synchronize messages through invalid event"
+```jsx 35,40:49,60 file=./src/synchronize-messages.jsx title="Synchronize messages through invalid event"
 ```
 
 </Step>
 
 <Step>
 
-<Example src="./examples/4b" />
+<Example src="./examples/display-error" />
 
-```jsx file=./04b.jsx title="Display error next to the input"
+```jsx file=./src/display-error.jsx title="Display error next to the input"
 ```
 
 </Step>
@@ -290,24 +289,24 @@ console.log(input.validationMessage);
 
 <Step>
 
-<Example src="./examples/4b" />
+<Example src="./examples/display-error" />
 
-```jsx 68:99 file=./04b.jsx
+```jsx 68:99 file=./src/display-error.jsx
 ```
 
 </Step>
 
 <Step>
 
-<Example src="./examples/5a" />
+<Example src="./examples/extract-constraints" />
 
-```jsx 90,99,108 file=./05a.jsx title="Extract constraints of each form control"
+```jsx 90,99,108 file=./src/extract-constraints.jsx title="Extract constraints of each form control"
 ```
 </Step>
 
 <Step>
 
-<Example src="./examples/5a" />
+<Example src="./examples/extract-constraints" />
 
 ```diff 4:19 title="Extract constraints of each form control"
 ```
@@ -315,16 +314,16 @@ console.log(input.validationMessage);
 
 <Step>
 
-<Example src="./examples/5b" />
+<Example src="./examples/parse-formdata" />
 
-```jsx 1 file=./05b.jsx title="Import parse helper"
+```jsx 1 file=./src/parse-formdata.jsx title="Parse formData based on schema"
 ```
 
 </Step>
 
 <Step>
 
-<Example src="./examples/5b" />
+<Example src="./examples/parse-formdata" />
 
 ```diff 54:66 title="Parse formData based on schema"
 ```
@@ -333,9 +332,9 @@ console.log(input.validationMessage);
 
 <Step>
 
-<Example src="./examples/5c" />
+<Example src="./examples/synchronize-server-error" />
 
-```jsx 69:77 file=./05c.jsx title="Synchronize error with client error state"
+```jsx 69:77 file=./src/synchronize-server-error.jsx title="Synchronize error with client error state"
 ```
 
 </Step>
