@@ -1,12 +1,14 @@
 import { Form } from '@remix-run/react';
+import { notifySubmission, defaultAction } from '~/helpers';
+
+export const action = defaultAction;
 
 export default function SignupForm() {
   return (
     <Form
       method="post"
       onSubmit={event => {
-        event.preventDefault();
-        alert('Submitted');
+        notifySubmission(event);
       }}
     >
       <div>

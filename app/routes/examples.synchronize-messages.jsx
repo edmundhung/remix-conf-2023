@@ -1,5 +1,6 @@
 import { Form } from '@remix-run/react';
 import { useState } from 'react';
+import { notifySubmission, defaultAction } from '~/helpers';
 
 function formatError({ input, formData }) {
   switch (input.name) {
@@ -31,6 +32,8 @@ function formatError({ input, formData }) {
   return '';
 }
 
+export const action = defaultAction;
+
 export default function SignupForm() {
   const [error, setError] = useState({});
 
@@ -59,10 +62,10 @@ export default function SignupForm() {
 
         if (!form.reportValidity()) {
           event.preventDefault();
-        } else {
-          event.preventDefault();
-          alert('Submitted');
+          return;
         }
+        
+        notifySubmission(event);
       }}
       noValidate
     >

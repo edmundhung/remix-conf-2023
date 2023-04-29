@@ -1,4 +1,7 @@
 import { Form } from '@remix-run/react';
+import { notifySubmission, defaultAction } from '~/helpers';
+
+export const action = defaultAction;
 
 export default function SignupForm() {
   return (
@@ -9,10 +12,10 @@ export default function SignupForm() {
 
         if (!form.reportValidity()) {
           event.preventDefault();
-        } else {
-          event.preventDefault();
-          alert('Submitted');
+          return;
         }
+
+        notifySubmission(event);
       }}
       noValidate
     >
