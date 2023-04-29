@@ -144,7 +144,7 @@ interface HTMLInputElement {
 ```jsx title="Validation message"
 const [input] = document.getElementsByTagName('input');
 
-// Check message on error bubble
+// Check message displayed
 console.log(input.validationMessage);
 
 // Override message
@@ -334,7 +334,7 @@ console.log(input.validationMessage);
 
 <Example src="./examples/synchronize-server-error" />
 
-```jsx 69:77 file=./src/synchronize-server-error.jsx title="Synchronize error with client error state"
+```jsx 69:77 file=./src/synchronize-server-error.jsx title="Synchronize server error with client state"
 ```
 
 </Step>

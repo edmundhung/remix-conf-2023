@@ -4,6 +4,10 @@ export default function SignupForm() {
   return (
     <Form
       method="post"
+      onSubmit={event => {
+        event.preventDefault();
+        alert('Submitted');
+      }}
       noValidate
     >
       <div>

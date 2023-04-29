@@ -78,6 +78,9 @@ export default function SignupForm() {
 
         if (!form.reportValidity()) {
           event.preventDefault();
+        } else {
+          event.preventDefault();
+          alert('Submitted');
         }
       }}
       noValidate
