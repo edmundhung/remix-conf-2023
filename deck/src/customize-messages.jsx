@@ -1,6 +1,10 @@
 import { Form } from '@remix-run/react';
 
 function formatError({ input, formData }) {
+  switch (input.name) {
+    // ...
+  }
+
   return '';
 }
 
