@@ -52,18 +52,18 @@ function formatError({ input, formData }) {
 }
 
 export async function action({ request }) {
-    const formData = await request.formData();
-    const submission = parse(formData, {
-      schema,
-      formatError,
-    });
-  
-    if (submission.error) {
-      return json(submission, { status: 400 })
-    }
-  
-    return await signup(submission.value);
+  const formData = await request.formData();
+  const submission = parse(formData, {
+    schema,
+    formatError,
+  });
+
+  if (submission.error) {
+    return json(submission, { status: 400 })
   }
+
+  return await signup(submission.value);
+}
 
 export default function SignupForm() {
   const [error, setError] = useState({});

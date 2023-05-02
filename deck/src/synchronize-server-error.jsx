@@ -1,7 +1,7 @@
 import { parse } from "@conform-to/validitystate"
 import { json } from "@remix-run/node";
 import { Form, useActionData } from '@remix-run/react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { signup } from "~/auth.server";
 
 const schema = {
@@ -68,12 +68,6 @@ export async function action({ request }) {
 export default function SignupForm() {
   const lastSubmission = useActionData();
   const [error, setError] = useState(lastSubmission?.error ?? {});
-
-  useEffect(() => {
-    if (lastSubmission) {
-      setError(lastSubmission?.error ?? {});
-    }
-  }, [lastSubmission]);
 
   return (
     <Form

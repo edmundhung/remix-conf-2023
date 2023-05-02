@@ -69,12 +69,6 @@ export default function SignupForm() {
   const lastSubmission = useActionData();
   const [error, setError] = useState(lastSubmission?.error ?? {});
 
-  useEffect(() => {
-    if (lastSubmission) {
-      setError(lastSubmission?.error ?? {});
-    }
-  }, [lastSubmission]);
-
   return (
     <Form
         method="post"
