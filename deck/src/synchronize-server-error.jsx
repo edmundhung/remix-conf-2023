@@ -1,22 +1,22 @@
-import { parse } from "@conform-to/validitystate"
-import { json } from "@remix-run/node";
+import { parse } from '@conform-to/validitystate'
+import { json } from '@remix-run/node';
 import { Form, useActionData } from '@remix-run/react';
 import { useState } from 'react';
-import { signup } from "~/auth.server";
+import { signup } from '~/auth.server';
 
 const schema = {
   email: {
-    type: "email",
+    type: 'email',
     required: true,
   },
   password: {
-    type: "password",
+    type: 'password',
     required: true,
     minLength: 8,
-    pattern: "(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[1-9]).*",
+    pattern: '(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[1-9]).*',
   },
   confirmPassword: {
-    type: "password",
+    type: 'password',
     required: true,
   },
 };
@@ -59,7 +59,7 @@ export async function action({ request }) {
   });
 
   if (submission.error) {
-    return json(submission, { status: 400 })
+    return json(submission, { status: 400 });
   }
 
   return await signup(submission.value);
@@ -71,34 +71,34 @@ export default function SignupForm() {
 
   return (
     <Form
-        method="post"
-        onInvalid={event => {
-            const input = event.target;
+      method="post"
+      onInvalid={(event) => {
+        const input = event.target;
 
-            setError((error) => ({
-                ...error,
-                [input.name]: input.validationMessage,
-            }));
+        setError((error) => ({
+          ...error,
+          [input.name]: input.validationMessage,
+        }));
 
-            event.preventDefault();
-        }}
-        onSubmit={event => {
-            const form = event.currentTarget;
-            const formData = new FormData(form);
+        event.preventDefault();
+      }}
+      onSubmit={(event) => {
+        const form = event.currentTarget;
+        const formData = new FormData(form);
 
-            for (const input of form.elements) {
-                if (input instanceof HTMLInputElement) {
-                input.setCustomValidity(formatError({ input, formData }));
-                }
-            }
+        for (const input of form.elements) {
+          if (input instanceof HTMLInputElement) {
+            input.setCustomValidity(formatError({ input, formData }));
+          }
+        }
 
-            setError({});
+        setError({});
 
-            if (!form.reportValidity()) {
-                event.preventDefault();
-            }
-        }}
-        noValidate
+        if (!form.reportValidity()) {
+          event.preventDefault();
+        }
+      }}
+      noValidate
     >
       <div>
         <label>Email</label>

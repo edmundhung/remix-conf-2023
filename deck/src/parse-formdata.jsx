@@ -1,54 +1,54 @@
-import { parse } from "@conform-to/validitystate"
-import { json } from "@remix-run/node";
-import { Form } from "@remix-run/react";
-import { useState } from "react";
-import { signup } from "~/auth.server";
+import { parse } from '@conform-to/validitystate';
+import { json } from '@remix-run/node';
+import { Form } from '@remix-run/react';
+import { useState } from 'react';
+import { signup } from '~/auth.server';
 
 const schema = {
   email: {
-    type: "email",
+    type: 'email',
     required: true,
   },
   password: {
-    type: "password",
+    type: 'password',
     required: true,
     minLength: 8,
-    pattern: "(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[1-9]).*",
+    pattern: '(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[1-9]).*',
   },
   confirmPassword: {
-    type: "password",
+    type: 'password',
     required: true,
   },
 };
 
 function formatError({ input, formData }) {
   switch (input.name) {
-    case "email":
+    case 'email':
       if (input.validity.valueMissing) {
-        return "Email is required";
+        return 'Email is required';
       } else if (input.validity.typeMismatch) {
-        return "Email is invalid";
+        return 'Email is invalid';
       }
       break;
-    case "password":
+    case 'password':
       if (input.validity.valueMissing) {
-        return "Password is required";
+        return 'Password is required';
       } else if (input.validity.tooShort) {
-        return "Password must be at least 8 characters";
+        return 'Password must be at least 8 characters';
       } else if (input.validity.patternMismatch) {
-        return "Password must contain at least one uppercase letter, one lowercase letter, and one number";
+        return 'Password must contain at least one uppercase letter, one lowercase letter, and one number';
       }
       break;
-    case "confirmPassword":
+    case 'confirmPassword':
       if (input.validity.valueMissing) {
-        return "Confirm password is required";
-      } else if (input.value !== formData.get("password")) {
-        return "Passwords do not match";
+        return 'Confirm password is required';
+      } else if (input.value !== formData.get('password')) {
+        return 'Passwords do not match';
       }
       break;
   }
 
-  return "";
+  return '';
 }
 
 export async function action({ request }) {
@@ -59,7 +59,7 @@ export async function action({ request }) {
   });
 
   if (submission.error) {
-    return json(submission, { status: 400 })
+    return json(submission, { status: 400 });
   }
 
   return await signup(submission.value);
@@ -102,7 +102,7 @@ export default function SignupForm() {
       <div>
         <label>Email</label>
         <input
-          className={error.email ? "error" : ""}
+          className={error.email ? 'error' : ''}
           name="email"
           {...schema.email}
         />
@@ -111,7 +111,7 @@ export default function SignupForm() {
       <div>
         <label>Password</label>
         <input
-          className={error.password ? "error" : ""}
+          className={error.password ? 'error' : ''}
           name="password"
           {...schema.password}
         />
@@ -120,7 +120,7 @@ export default function SignupForm() {
       <div>
         <label>Confirm Password</label>
         <input
-          className={error.confirmPassword ? "error" : ""}
+          className={error.confirmPassword ? 'error' : ''}
           name="confirmPassword"
           {...schema.confirmPassword}
         />
