@@ -16,6 +16,7 @@ export default function SignupForm() {
         <input
           name="email"
           type="email"
+          autoComplete="off"
         />
       </div>
       <div>

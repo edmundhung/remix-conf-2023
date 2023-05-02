@@ -77,6 +77,7 @@ export default function SignupForm() {
           className={error.email ? 'error' : ''}
           name="email"
           type="email"
+          autoComplete="off"
           required
         />
         <p>{error.email}</p>

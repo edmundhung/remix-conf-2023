@@ -105,6 +105,7 @@ export default function SignupForm() {
         <input
           className={error.email ? 'error' : ''}
           name="email"
+          autoComplete="off"
           {...schema.email}
         />
         <p>{error.email}</p>
