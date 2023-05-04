@@ -24,7 +24,7 @@ export function Picture({ src, style }) {
   const url = getUrl(src);
 
   return (
-    <img src={url} style={{ maxWidth: '90vw', maxHeight: '80vh', ...style }} />
+    <img src={url} style={{ maxWidth: '95vw', maxHeight: '90vh', ...style }} />
   );
 }
 
