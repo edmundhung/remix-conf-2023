@@ -1,7 +1,7 @@
 import { Form } from '@remix-run/react';
 import { useState } from 'react';
 
-const schema = {
+const constraints = {
   email: {
     type: 'email',
     required: true,
@@ -31,7 +31,7 @@ function formatError({ input, formData }) {
       if (input.validity.valueMissing) {
         return 'Password is required';
       } else if (input.validity.tooShort) {
-        return 'Password must be at least 8 characters';
+        return `Password must be at least ${input.minLength} characters`;
       } else if (input.validity.patternMismatch) {
         return 'Password must contain at least one uppercase letter, one lowercase letter, and one number';
       }
@@ -87,7 +87,7 @@ export default function SignupForm() {
         <input
           className={error.email ? 'error' : ''}
           name="email"
-          {...schema.email}
+          {...constraints.email}
         />
         <p>{error.email}</p>
       </div>
@@ -96,7 +96,7 @@ export default function SignupForm() {
         <input
           className={error.password ? 'error' : ''}
           name="password"
-          {...schema.password}
+          {...constraints.password}
         />
         <p>{error.password}</p>
       </div>
@@ -105,7 +105,7 @@ export default function SignupForm() {
         <input
           className={error.confirmPassword ? 'error' : ''}
           name="confirmPassword"
-          {...schema.confirmPassword}
+          {...constraints.confirmPassword}
         />
         <p>{error.confirmPassword}</p>
       </div>

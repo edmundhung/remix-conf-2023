@@ -14,7 +14,7 @@ function formatError({ input }) {
       if (input.validity.valueMissing) {
         return 'Password is required';
       } else if (input.validity.tooShort) {
-        return 'Password must be at least 8 characters';
+        return `Password must be at least ${input.minLength} characters`;
       } else if (input.validity.patternMismatch) {
         return 'Password must contain at least one uppercase letter, one lowercase letter, and one number';
       }

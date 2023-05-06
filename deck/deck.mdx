@@ -133,12 +133,10 @@ export const theme = deck;
 
 <Step>
 
-```ts title="The error interface"
-interface HTMLInputElement {
-  validationMessage: string; 
-  setCustomValidity(error: string): void;
-  validity: ValidityState;
-}
+```md title="The error interface"
+- validationMessage
+- setCustomValidity
+- validity
 ```
 
 ```jsx
@@ -150,7 +148,7 @@ interface HTMLInputElement {
 
 <Step>
 
-```diff 2,3 title="The error interface"
+```diff 1,2 title="The error interface"
 ```
 
 ```jsx title="Validation message"
@@ -170,7 +168,7 @@ console.log(input.validationMessage);
 
 <Step>
 
-```diff 4 title="The error interface"
+```diff 3 title="The error interface"
 ```
 
 ```jsx title="ValidityState"
@@ -288,7 +286,7 @@ console.log(input.validationMessage);
 
 <Layout>
 
-## How about the server?
+# How about the server?
 
 </Layout>
 
@@ -296,7 +294,7 @@ console.log(input.validationMessage);
 
 <Layout>
 
-### 🔥 Introducing @conform-to/validitystate
+## 🔥 Introducing @conform-to/validitystate
 
 - Provides a ValidityState like interface based on the validation attributes
 - Supports type inference and coercions
@@ -366,7 +364,7 @@ console.log(input.validationMessage);
 
 <Layout>
 
-## It's just "The Web"
+# It's just "The Web"
 
 </Layout>
 
