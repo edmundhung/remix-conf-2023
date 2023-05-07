@@ -66,6 +66,7 @@ export const demo = {
     fonts: {
     //   body: '"Helvetica Neue", Helvetica, Arial, sans-serif',
     },
+    fontSizes: [96, 96, 96, 96, 96, 42, 58, 64, 96],
     colors: {
       text: '#000',
       primary: '#f00',

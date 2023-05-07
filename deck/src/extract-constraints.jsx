@@ -10,7 +10,7 @@ const constraints = {
     type: 'password',
     required: true,
     minLength: 8,
-    pattern: '(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[1-9]).*',
+    pattern: '(?=.*?[a-z])(?=.*?[A-Z]).*',
   },
   confirmPassword: {
     type: 'password',
@@ -33,7 +33,7 @@ function formatError({ input, formData }) {
       } else if (input.validity.tooShort) {
         return `Password must be at least ${input.minLength} characters`;
       } else if (input.validity.patternMismatch) {
-        return 'Password must contain at least one uppercase letter, one lowercase letter, and one number';
+        return 'Password must contain at least one uppercase and one lowercase letter';
       }
       break;
     case 'confirmPassword':
