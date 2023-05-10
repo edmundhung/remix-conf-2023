@@ -14,7 +14,7 @@ export function Example({ src, style }) {
   return (
     <iframe
       src={url} 
-      style={{ height: '100%', width: '100%', border: 'none', backgroundColor: 'rgb(243 244 246)', ...style }}
+      style={{ height: '100%', width: '100%', border: 'none', backgroundColor: 'rgb(229 231 235)', ...style }}
       title="example"
     />
   );
