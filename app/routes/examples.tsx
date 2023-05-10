@@ -1,5 +1,12 @@
+import { type HeadersFunction } from "@remix-run/cloudflare";
 import { Form, Outlet, useLocation } from "@remix-run/react";
 import { useShouldHydrate } from "~/root";
+
+export const headers: HeadersFunction = () => {
+  return {
+    'Cache-Control': 'max-age=3600',
+  };
+}
 
 export default function Layout() {
   const shouldHydrate = useShouldHydrate();

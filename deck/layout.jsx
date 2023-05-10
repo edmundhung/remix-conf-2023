@@ -35,7 +35,7 @@ export function Layout({ title, children }) {
       <div style={{ height: '100%', width:'100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <div>{children}</div>
       </div>
-      <div style={{ fontSize: '1rem' }}>Edmund Hung @ Remix Conf 2023</div>
+      <div style={{ fontSize: '1.25rem' }}>Edmund Hung @ Remix Conf 2023</div>
     </div>
   );
 }
